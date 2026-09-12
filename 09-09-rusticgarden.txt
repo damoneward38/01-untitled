@@ -1,0 +1,50 @@
+import * as THREE from 'three';
+import { Canvas, useFrame, useThree, extend } from '@react-three/fiber';
+import { Env, OrbitControls } from '@react-three/drei';
+import Crate from '../components/Crate';
+
+extend({ OrbitControls });
+
+const CrateGrid = () => {
+  const crates = [];
+  const spacing = 3;
+  const gridSize = 5;
+  for (let i = 0; i < gridSize; i++) {
+    for (let j = 0; j < gridSize; j++) {
+      const id = i * gridSize + j + 1;
+      crates.push(
+        <Crate
+          key={id}
+          position={[i * spacing - spacing * gridSize / 2, 1, j * spacing - spacing * gridSize / 2]}
+          label={`AI #${id}`}
+          onClick={() => console.log(`Open AI #${id}`)}
+        />
+      );
+    }
+  }
+  return <group>{crates}</group>;
+};
+
+export default function RusticGarden() {
+  const { scene } = useThree();
+  // Rustic ground texture
+  const planeTexture = new THREE.TextureLoader().load('/textures/grass.jpg');
+  useFrame(() => { /* animate if necessary */ });
+  return (
+    <>
+      <ambientLight intensity={0.5} />
+      <directionalLight position={[5, 10, 5]} intensity={1.2} />
+      <CrateGrid />
+      <mesh
+        rotation={[-Math.PI / 2, 0, 0]}
+        position={[0, -0.5, 0]}
+        receiveShadow
+      >
+        <planeGeometry args={[50, 50]} />
+        <meshStandardMaterial map={planeTexture} />
+      </mesh>
+      <Env preset="warehouse" />
+      <OrbitControls enablePan={false} />
+    </>
+  );
+}

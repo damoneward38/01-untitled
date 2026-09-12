@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  gateway:
+    build: infra/Dockerfile.gateway
+    ports:
+      - "5000:5000"          # API gateway
+    depends_on:
+      - prefect
+    environment:
+      - PREFECT__CLOUD__ENABLE=0
+      - PREFECT__FLOW_SERVER__URL=http://prefect:4200/api
+  prefect:
+    image: prefecthq/prefect:2.13.1
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./infra/prefect/flow.py:/app/flow.py
+  assistant:
+    build: services/assistant
+    # auto‑create
+  autotask:
+    build: services/autotask
+    # ...
+  # … 19 other services (same pattern)

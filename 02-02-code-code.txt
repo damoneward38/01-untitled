@@ -1,0 +1,29 @@
+/gan-rvyah
+├── infra/
+│   ├── docker-compose.yml
+│   ├── Dockerfile.gateway
+│   ├── prefect/
+│   │   ├── flow.py                # Orchestrator logic
+│   │   └── docker-compose.yml    # Prefect & worker
+│   └── helm/                      # (Optional) K8s charts
+├── services/
+│   ├── assistant/                 # OpenAssistant container
+│   │   ├── Dockerfile
+│   │   └── server.py
+│   ├── autotask/                  # AutoGPT container
+│   │   ├── Dockerfile
+│   │   └── main.py
+│   └── ...  (repeat for each of 21 AIs)
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── Crate.jsx          # 3‑D box component
+│   │   │   ├── Console.jsx
+│   │   │   └── Gallery.jsx
+│   │   ├── scenes/
+│   │   │   └── RusticGarden.tsx
+│   │   └── App.tsx
+│   ├── package.json
+│   └── webpack.config.js    # or CRA
+└── README.md
